@@ -1,13 +1,14 @@
 import Phaser from 'phaser'
+import TextureKeys from './consts/TextureKeys'
 export default class Preloader extends Phaser.Scene {
     constructor(){
         super('preloader')
     }
    preload(){
-    this.load.image('background','house/bg_repeat_340x640.png')
+    this.load.image(TextureKeys.Background,'house/bg_repeat_340x640.png')
         //carregar o atlas
         this.load.atlas(
-            'rocket-mouse',
+            TextureKeys.RocketMouse,
             'characters/rocket-mouse.png',
             'characters/rocket-mouse.json',
         )
