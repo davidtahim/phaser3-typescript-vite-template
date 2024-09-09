@@ -7,6 +7,8 @@ export default class Game extends Phaser.Scene {
     private mouseHole!: Phaser.GameObjects.Image
     private window1!: Phaser.GameObjects.Image
     private window2!: Phaser.GameObjects.Image
+    private bookcase1!: Phaser.GameObjects.Image
+    private bookcase2!: Phaser.GameObjects.Image
     
     constructor() {
         super("game")
@@ -56,10 +58,18 @@ export default class Game extends Phaser.Scene {
             Number.MAX_SAFE_INTEGER, height -30
         )
         
+        this.bookcase1 = this.add.image(
+            Phaser.Math.Between(2200,2700),580,TextureKeys.Bookcase1
+        ) .setOrigin(0.5,1)
+        this.bookcase2 = this.add.image(
+            Phaser.Math.Between(2900,3400),580,TextureKeys.Bookcase2
+        ) .setOrigin(0.5,1)
+
     }
     update(t:number, dt:number) {
         this.wrapMouseHole()
         this.wrapWindows()
+        this.wrapBookcases()
         this.background.setTilePosition(this.cameras.main.scrollX)
         
     }
@@ -97,5 +107,28 @@ export default class Game extends Phaser.Scene {
      this.window1.x + width + 800
      )
      }
-     }
+    }
+    private wrapBookcases()
+ {
+ const scrollX = this.cameras.main.scrollX
+ const rightEdge = scrollX + this.scale.width
+
+ let width = this.bookcase1.width * 2
+ if (this.bookcase1.x + width < scrollX)
+ {
+ this.bookcase1.x = Phaser.Math.Between(
+ rightEdge + width,
+ rightEdge + width + 800
+ )
+ }
+
+ width = this.bookcase2.width
+ if (this.bookcase2.x + width < scrollX)
+ {
+ this.bookcase2.x = Phaser.Math.Between(
+ this.bookcase1.x + width,
+ this.bookcase1.x + width + 800
+ )
+ }
+ }
 }
