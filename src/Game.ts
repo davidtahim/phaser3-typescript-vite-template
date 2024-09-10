@@ -1,6 +1,7 @@
 import Phaser from "phaser"
 import TextureKeys from "./consts/TextureKeys"
 import AnimationKeys from "./consts/AnimationKeys"
+import RocketMouse from "./game/RocketMouse"
 
 export default class Game extends Phaser.Scene {
     private background!: Phaser.GameObjects.TileSprite
@@ -48,21 +49,25 @@ export default class Game extends Phaser.Scene {
             Phaser.Math.Between(1600, 2000), 200, TextureKeys.Window2
         )
         this.windows = [this.window1, this.window2]
-        const mouse = this.physics.add.sprite(
-            width * 0.5,
-            height - 30,
-            TextureKeys.RocketMouse,
-            'rocketmouse_fly01.png')
-            .play(AnimationKeys.RocketMouseRun)
+        // const mouse = this.physics.add.sprite(
+        //     width * 0.5,
+        //     height - 30,
+        //     TextureKeys.RocketMouse,
+        //     'rocketmouse_fly01.png')
+        //.play(AnimationKeys.RocketMouseRun)
+        
+        const mouse = new RocketMouse(this, width * 0.5, height - 30)
+         this.add.existing(mouse)
+        
         const body = mouse.body as Phaser.Physics.Arcade.Body
-        body.setCollideWorldBounds(true)
-        body.setVelocityX(200)
-        this.cameras.main.startFollow(mouse)
-        this.cameras.main.setBounds(0, 0, Number.MAX_SAFE_INTEGER, height)
-        this.physics.world.setBounds(
-            0, 0,
-            Number.MAX_SAFE_INTEGER, height - 30
-        )
+         body.setCollideWorldBounds(true)
+         body.setVelocityX(200)
+         this.cameras.main.startFollow(mouse)
+         this.cameras.main.setBounds(0, 0, Number.MAX_SAFE_INTEGER, height)
+         this.physics.world.setBounds(
+             0, 0,
+             Number.MAX_SAFE_INTEGER, height - 30
+         )
 
         this.bookcase1 = this.add.image(
             Phaser.Math.Between(2200, 2700), 580, TextureKeys.Bookcase1
