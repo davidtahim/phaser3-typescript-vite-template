@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import TextureKeys from './consts/TextureKeys'
+import AnimationKeys from './consts/AnimationKeys'
 export default class Preloader extends Phaser.Scene {
     constructor(){
         super('preloader')
@@ -34,7 +35,16 @@ export default class Preloader extends Phaser.Scene {
             frameRate:10,
             repeat:-1
         }
+       
     )
+
+    this.anims.create({
+        key:AnimationKeys.RocketFlamesOn,
+        frames:this.anims.generateFrameNames(TextureKeys.RocketMouse,{ start:1,end:2, prefix:'flame',suffix:'.png'}),
+     frameRate:10,
+     repeat:-1
+    })
+
     this.scene.start('game')
 
    } 
